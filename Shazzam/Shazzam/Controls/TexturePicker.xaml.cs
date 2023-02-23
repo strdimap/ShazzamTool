@@ -187,15 +187,14 @@ namespace Shazzam.Controls
         private void IncludedTextures_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            BitmapImage bi = new BitmapImage(new Uri("/Shazzam;component/Images/cactus.jpg", UriKind.RelativeOrAbsolute)); ;
-            //string uriLocation = ((TextureMapLocator)IncludedTexturesCombo.SelectedItem).TrimmedFileName;
-            string uriLocation = ((TextureMapLocator)IncludedTexturesList.SelectedItem).TrimmedFileName;
-            popSelectTexture.IsOpen = false;
-            Uri resourceUri = new Uri(uriLocation, UriKind.RelativeOrAbsolute);
-            StreamResourceInfo streamInfo = Application.GetContentStream(resourceUri);
 
-            BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
-            ImageBrush brush = new ImageBrush(temp);
+            popSelectTexture.IsOpen = false;
+            string vFilePath = ((TextureMapLocator)IncludedTexturesList.SelectedItem).LongFileName;
+            Uri resourceUri = new Uri( vFilePath, UriKind.Absolute);
+
+            BitmapSource vSource = new BitmapImage(resourceUri);
+          
+            ImageBrush brush = new ImageBrush(vSource);
             Value = brush;
 
             switch (_register.RegisterNumber)
@@ -215,7 +214,7 @@ namespace Shazzam.Controls
                     Properties.Settings.Default.FilePath_TextureMap1 = resourceUri;
                     break;
             }
-            // Properties.Settings.Default.FilePath_TextureMap1 = resourceUri;
+           
             Properties.Settings.Default.Save();
 
         }
